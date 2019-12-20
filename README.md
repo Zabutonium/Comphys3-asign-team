@@ -6,7 +6,7 @@
 * Yuta Hiemori
 * Shunta Onodera
 
-## To do
+## To Do
 10^4個の質点の運動のシミュレーションを行う。アルゴリズムとしては基本的にRunge-Kutta法を用いるが，場合によっては計算量改善のためのアルゴリズムを導入する可能性もある。
 
 ## Reference
@@ -14,4 +14,4 @@
 manaba の計算物理学３のリンク。基本的には manaba の資料などを参考に。
 
 2. https://backlog.com/ja/git-tutorial/
-Github の使い方についてはこのサイトが詳しく分かりやすい。
+GitHub の使い方についてはこのサイトが詳しく分かりやすい。
