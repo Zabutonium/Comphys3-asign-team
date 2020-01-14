@@ -15,7 +15,7 @@ long upSqrt(long num); //sqrtとったやつを切り上げ
 
 int main() {
     long lines, x, y, dx, dy, count;
-    lines = upSqrt(N);
+    lines = std::ceil(std::sqrt(N));
     dx = dy = MAX_POINT/lines;
     x = y = 0;
     count = 0;
@@ -35,10 +35,4 @@ int main() {
     }
     output.close();
     return 0;
-}
-
-long upSqrt(long num) { 
-    double root = std::sqrt(num);
-    long downRoot = (long)std::sqrt(num);
-    return (root == downRoot) ? downRoot : downRoot+1;
 }
