@@ -5,7 +5,7 @@
 const long        MAX_POINT    = 10000;
 const long        MAX_VELOCITY = 100;
 const long        N            = 100;
-const std::string FILE_NAME         = "inputfile.dat";
+const std::string FILE_NAME    = "inputfile.dat";
 
 int randomSign(int unnti); //乱数の入力を1or-1で返すだけ
 
