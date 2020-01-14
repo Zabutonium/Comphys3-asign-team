@@ -15,8 +15,8 @@ long getSuitableRnd(std::mt19937 &output, std::mt19937 &unnti, long max); //pか
 int main() {
     std::random_device seed;
     std::mt19937 rnd_p(seed());
-    std::mt19937 rnd_v(seed());
-    std::mt19937 rnd_m(seed());
+    std::mt19937 rnd_v(rnd_p());
+    std::mt19937 rnd_m(rnd_v());
     std::ofstream ofs(FILE_NAME);
     for (int i = 0; i < N; i++) {
         ofs << getSuitableRnd(rnd_p, rnd_v, MAX_POINT) << " ";
