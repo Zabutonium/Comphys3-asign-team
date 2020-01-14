@@ -11,9 +11,9 @@ const long        INITIAL_MASS       = 10000;
 const long        N                  = 100;
 const std::string FILE_NAME          = "inputfile.dat";
 
-long upSqrt(long num);
+long upSqrt(long num); //sqrtとったやつを切り上げ
 
-int main() { //sqrtとったやつを切り上げ
+int main() {
     long lines, x, y, dx, dy, count;
     lines = upSqrt(N);
     dx = dy = MAX_POINT/lines;
