@@ -8,7 +8,7 @@ const long        MAX_VELOCITY = 100;
 const long        N            = 10000;
 const std::string FILE_NAME    = "inputfile.dat";
 
-int randomSign(int unnti); //乱数の入力を1or-1で返すだけ
+int randomSign(int input); //乱数の入力を1or-1で返すだけ
 
 long getSuitableRnd(std::mt19937 &output, std::mt19937 &unnti, long max); //pかvかきめて範囲内の乱数に整えて返す
 
