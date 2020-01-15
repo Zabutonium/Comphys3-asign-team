@@ -25,14 +25,14 @@ struct object {
 double distance(object obj1, object obj2);
 
 //obj1がobj2からうける力
-//flag = 0でx　１でｙ
-double acceralate(object obj1, object obj2, int flag); 
+//axis = 0でx　１でｙ
+double acceralate(object obj1, object obj2, int axis); 
 
 //一方向分のperticle[i]がうける力の総和
-//flag = 0でx　１でｙ
-double acceralateSum(vector<object> p, int index, int flag);
+//axis = 0でx　１でｙ
+double acceralateSum(vector<object> p, int index, int axis);
 
-void initAcceralate(vector<object> p, int flag);
+void initAcceralate(vector<object> p, int axis);
 
 void scanandthrow(int num, std::fstream yomikaki);
 
@@ -58,15 +58,15 @@ double distance(object obj1, object obj2) {
     return std::sqrt((obj1.x[0] - obj2.x[0])*(obj1.x[0] - obj2.x[0]) + (obj1.x[1] - obj2.x[1])*(obj1.x[1] - obj2.x[1]));
 }
 
-double acceralate(object obj1, object obj2, int flag) {
-    return (obj2.x[flag] -obj1.x[flag]) / std::pow(distance(obj1, obj2), 3);
+double acceralate(object obj1, object obj2, int axis) {
+    return (obj2.x[axis] -obj1.x[axis]) / std::pow(distance(obj1, obj2), 3);
 }
 
-double acceralateSum(vector<object> p, int index, int flag) {
+double acceralateSum(vector<object> p, int index, int axis) {
     double res = 0;
     for (int i = 0; i < N; i++){
         if (i = index) continue;
-        res += acceralate(p[index], p[i], flag);
+        res += acceralate(p[index], p[i], axis);
     }
     return res;    
 }
@@ -79,7 +79,7 @@ void initAcceralate(vector<object> p) {
 }    
 
 //あとで直す
-void scanandthrow(int num, std::fstream yomikaki) {
+void scanandthrow(int num, std::fstream &yomikaki) {
     string buf;
     for (int i = 0; i < num; i++) {
         std::getline(std::cin, buf);
