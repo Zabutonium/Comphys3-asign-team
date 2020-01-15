@@ -7,7 +7,7 @@
 const long        MAX_POINT          = 10000;
 const long        INITIAL_VELOCITY_X = 100;
 const long        INITIAL_VELOCITY_Y = 100;
-const long        INITIAL_MASS       = 10000;
+//const long        INITIAL_MASS       = 10000;
 const long        N                  = 100;
 const std::string FILE_NAME          = "inputfile.dat";
 
@@ -24,10 +24,10 @@ int main() {
         for (int j = 0; j < lines; j++) {
             output << x << " " << y << " ";
             output << INITIAL_VELOCITY_X << " " << INITIAL_VELOCITY_Y << " ";
-            output << INITIAL_MASS;
+            //output << INITIAL_MASS;
             count++;
             if (count == N) break;
-            output << " ";
+            //output << " ";
             x += dx;
         }
         x = 0;
