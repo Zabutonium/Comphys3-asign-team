@@ -28,10 +28,10 @@ int main() {
     return 0;
 }
 
-int randomSign(int unnti) {
-    return (unnti%2) ? 1 : -1;
+int randomSign(int input) {
+    return (input%2) ? 1 : -1;
 }
 
-long getSuitableRnd(std::mt19937 &output, std::mt19937 &unnti, long max) {
-    return randomSign(unnti())*(output()%(max+1));
+long getSuitableRnd(std::mt19937 &output, std::mt19937 &rnd, long max) {
+    return randomSign(rnd())*(output()%(max+1));
 }
