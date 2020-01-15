@@ -24,7 +24,6 @@ int main() {
         ofs << getSuitableRnd(rnd_v, rnd_m, MAX_VELOCITY) << " ";
         ofs << getSuitableRnd(rnd_v, rnd_m, MAX_VELOCITY) << " ";
         ofs << (rnd_m()%MAX_MASS)+1 << " ";
-        ofs << std::endl;
     }
     return 0;
 }
