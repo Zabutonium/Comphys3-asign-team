@@ -44,24 +44,15 @@ int main() {
     vector<object> particle(N);
     inputFromFile(particle);
     for (int i = 0; i < DEVIDE_TIME; i++) {
-        
-        //入力部分 あとでかく
-        initAcceralate(particle, 0);
-        initAcceralate(particle, 1);
-        
-        
+        std::ofstream output(FILE_NAME);
     }
-
-    //出力
-    std::ofstream outputfile(FILE_NAME);
     double t = 0;
     for(int i = 0; i < N; i++){
     //書き込み
         outputfile << t << " " << particle[i].x[0] << " " << particle[i].x[1] << " " << particle[i].v[0] << " " << particle[i].v[1];
     
     //時間発展
-        leapfrog(particle, i, 0);
-        leapfrog(particle, i, 1);
+        leapfrog(particle);
         t += MAX_TIME/DEVIDE_TIME;
         outputfile.close();
     }
@@ -71,10 +62,14 @@ int main() {
 
 void inputFromFile(vector<object> &per) {
     std::ifstream ifs(FILE_NAME);
+    string gomi;
+    ifs >> gomi; //ｔの読み捨て
     for (int i = 0; i < N; i++) {
         double x[2], v[2];
         ifs >> x[0] >> x[1] >> v[0] >> v[1];
-        per[i] = {x[0], x[1], v[0], v[1], 0, 0};
+        per[i] = {{x[0], x[1]},
+                  {v[0], v[1]},
+                  {   0,    0}};
     }
     ifs.close();
 }
@@ -96,29 +91,35 @@ double acceralateSum(vector<object> p, int index, int axis) {
     return res;    
 }
 
-void initAcceralate(vector<object> p) {
+//p(perticleの配列)の座標から全部の加速度を初期化
+void initAcceralate(vector<object> &p) {
     for (int i = 0; i < N; i++) {
         p[i].a[0] = acceralateSum(p, i, 0);
         p[i].a[1] = acceralateSum(p, i, 1);
     }
-}    
-
-//あとで直す
-void scanAndThrow(std::fstream &yomikaki, int counter) {
-    string buf;
-    for (int i = 0; i < counter; i++) {
-        std::getline(yomikaki, buf);
-    }
 }
 
 //leapfrogによる時間発展
-void leapfrog(vector<object> p,int index, int axis){
-    vector<object> np;
+//pの位置から加速度をセット(initAcceralate)
+//vMidlle = v_1/2
+//vMiddle -> xの順で更新
+//更新されたxからaを新たにせっと(a_i+1)
+//vを更新
+void leapfrog(vector<object> &p){
+    vector<vector<double>> vMiddle(N, vector<double>(2));
     double h = MAX_TIME/DEVIDE_TIME;
-    double a = acceralateSum(p, index, axis);
-    double newa;
-
-    p.at(index).x[axis] += p.at(index).v[axis]*h + a*h*h*0.5;
-    newa = acceralateSum(p, index, axis);
-    p.at(index).v[axis] += (a + newa)*h*0.5;
+    initAcceralate(p);
+    for (int i = 0; i < N; i++) {
+        vMiddle[i][0] = p[i].v[0] + p[i].a[0]*h/2;
+        vMiddle[i][1] = p[i].v[1] + p[i].a[0]*h/2;
+    }
+    for (int i = 0; i < N; i++) {
+        p[i].x[0] = p[i].x[0] + vMiddle[i][0]*h;
+        p[i].x[1] = p[i].x[1] + vMiddle[i][1]*h;
+    }
+    initAcceralate(p);
+    for (int i = 0; i < N; i++) {
+        p[i].v[0] = vMiddle[i][0] + p[i].a[0]*h/2;
+        p[i].v[0] = vMiddle[i][1] + p[i].a[1]*h/2;
+    }
 }
