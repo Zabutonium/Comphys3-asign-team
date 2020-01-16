@@ -3,6 +3,7 @@
 #include <iostream>
 #include <random>
 #include <fstream>
+#include <cmath>
 
 const long        MAX_POINT          = 10000;
 const long        INITIAL_VELOCITY_X = 100;

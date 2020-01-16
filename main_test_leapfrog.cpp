@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <cmath>
 
 #define vector std::vector
 #define string std::string
@@ -14,7 +15,7 @@ const long DEVIDE_TIME = 1000;  //tを何分割するか
 const string FILE_NAME_INPUT  = "inputfile.dat";
 const string FILE_NAME_OUTPUT = "outputfile.dat";
 
-const double dt          = (double)MAX_TIME / DEVIDE_TIME;
+const double dt = (double)MAX_TIME / DEVIDE_TIME;
 
 struct object {
     double x[2];
@@ -36,26 +37,36 @@ void initAcceralate(vector<object> p, int axis);
 
 void scanandthrow(int num, std::fstream yomikaki);
 
+void leapfrog(object obj1, object obj2, int axis);
+
 int main() {
-    vector<object> perticle(N);
+    vector<object> particle(N);
     //入力部 いらないかも
     std::ifstream inputfile(FILE_NAME_INPUT);
     for (int i = 0; i < N; i++) {
-        inputfile >> perticle[i].x[0] >> perticle[i].x[1] >> perticle[i].v[0] >> perticle[i].v[1];
+        inputfile >> particle[i].x[0] >> particle[i].x[1] >> particle[i].v[0] >> particle[i].v[1];
     }
     inputfile.close();
 
+    std::ofstream outputfile(FILE_NAME_OUTPUT);
+    double t = 0;
     for (int i = 0; i < DEVIDE_TIME; i++) {
+        //書き込み
+        outputfile << t << " " << particle[i].x[0] << " " << particle[i].x[1] << " " << particle[i].v[0] << " " << particle[i].v[1];
         //入力部分 あとでかく
-        initAcceralate(perticle, 0);
-
-
+        initAcceralate(particle, 0);
+        initAcceralate(particle, 1);
+        //時間発展
+        leapfrog(particle, i, 0);
+        leapfrog(particle, i, 1);
+        t += MAX_TIME/DEVIDE_TIME;
+        
 
     }
 }
 
 double distance(object obj1, object obj2) {
-    return std::sqrt((obj1.x[0] - obj2.x[0])*(obj1.x[0] - obj2.x[0]) + (obj1.x[1] - obj2.x[1])*(obj1.x[1] - obj2.x[1]));
+    return std::sqrt(pow(obj1.x[0] - obj2.x[0] , 2) + pow(obj1.x[1] - obj2.x[1] , 2));
 }
 
 double acceralate(object obj1, object obj2, int axis) {
@@ -84,4 +95,15 @@ void scanandthrow(int num, std::fstream &yomikaki) {
     for (int i = 0; i < num; i++) {
         std::getline(std::cin, buf);
     }
+}
+
+//leapfrogによる時間発展
+void leapfrog(vector<object> p,int index, int axis){
+    double h = MAX_TIME/DEVIDE_TIME;
+    double a = acceralateSum(p, index, axis);
+    double newa;
+
+    p.at(index).x[axis] += p.at(index).v[axis]*h + a*h*h*0.5;
+    newa = acceralateSum(p, index, axis);
+    p.at(index).v[axis] += (a + newa)*h*0.5;
 }
