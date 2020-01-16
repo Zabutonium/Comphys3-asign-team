@@ -22,6 +22,8 @@ struct object {
     double a[2];
 };
 
+void inputFromFile(vector<object> &per);
+
 double distance(object obj1, object obj2);
 
 //obj1がobj2からうける力
@@ -40,13 +42,7 @@ void leapfrog(object obj1, object obj2, int axis);
 
 int main() {
     vector<object> particle(N);
-    //入力部 いらないかも
-    std::ifstream inputfile(FILE_NAME_INPUT);
-    for (int i = 0; i < N; i++) {
-        inputfile >> particle[i].x[0] >> particle[i].x[1] >> particle[i].v[0] >> particle[i].v[1];
-    }
-    inputfile.close();
-
+    inputFromFile(particle);
     for (int i = 0; i < DEVIDE_TIME; i++) {
         
         //入力部分 あとでかく
@@ -71,6 +67,16 @@ int main() {
     }
     
     
+}
+
+void inputFromFile(vector<object> &per) {
+    std::ifstream ifs(FILE_NAME);
+    for (int i = 0; i < N; i++) {
+        double x[2], v[2];
+        ifs >> x[0] >> x[1] >> v[0] >> v[1];
+        per[i] = {x[0], x[1], v[0], v[1], 0, 0};
+    }
+    ifs.close();
 }
 
 double distance(object obj1, object obj2) {
