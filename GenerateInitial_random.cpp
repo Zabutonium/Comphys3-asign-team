@@ -18,6 +18,7 @@ int main() {
     std::mt19937 rnd_v(seed());
     //std::mt19937 rnd_m(seed());
     std::ofstream ofs(FILE_NAME);
+    ofs << 0 << " ";
     for (int i = 0; i < N; i++) {
         ofs << getSuitableRnd(rnd_p, rnd_v, MAX_POINT) << " ";
         ofs << getSuitableRnd(rnd_p, rnd_v, MAX_POINT) << " ";
@@ -25,6 +26,7 @@ int main() {
         ofs << getSuitableRnd(rnd_v, rnd_p, MAX_VELOCITY) << " ";
         //ofs << (rnd_m()%MAX_MASS)+1 << " ";
     }
+    ofs << std::endl;
     return 0;
 }
 
