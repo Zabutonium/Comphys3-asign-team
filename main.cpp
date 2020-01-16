@@ -65,6 +65,7 @@ void inputFromFile(vector<object> &per) {
         double x[2], v[2];
         ifs >> x[0] >> x[1] >> v[0] >> v[1];
         per[i] = object(x[0], x[1], v[0], v[1]);
+
     }
     ifs.close();
     std::cout << "success reading ..." << std::endl;;
@@ -114,7 +115,8 @@ void initAcceralate(vector<object> &p) {
 //更新されたxからaを新たにせっと(a_i+1)
 //vを更新
 void leapfrog(vector<object> &p){
-    vector<vector<double>> vMiddle(N, vector<double>(2));
+    vector<vector<double> > vMiddle(N, vector<double>(2));
+    double h = MAX_TIME/DEVIDE_TIME;
     initAcceralate(p);
     for (int i = 0; i < N; i++) {
         vMiddle[i][0] = p[i].v[0] + p[i].a[0]*dt/2;
