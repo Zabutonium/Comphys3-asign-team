@@ -11,8 +11,6 @@ const long        INITIAL_VELOCITY_Y = 0;
 const long        N                  = 10000;
 const std::string FILE_NAME          = "inputfile.dat";
 
-long upSqrt(long num); //sqrtとったやつを切り上げ
-
 int main() {
     long lines, x, y, dx, dy, count;
     lines = std::ceil(std::sqrt((double)N));
