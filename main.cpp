@@ -116,7 +116,6 @@ void initAcceralate(vector<object> &p) {
 //vを更新
 void leapfrog(vector<object> &p){
     vector<vector<double> > vMiddle(N, vector<double>(2));
-    double h = MAX_TIME/DEVIDE_TIME;
     initAcceralate(p);
     for (int i = 0; i < N; i++) {
         vMiddle[i][0] = p[i].v[0] + p[i].a[0]*dt/2;
