@@ -97,7 +97,7 @@ double acceralateSum(vector<object> p, int index, int axis) {
         if (i == index) continue;
         res += acceralate(p[index], p[i], axis);
     }
-    return res;    
+    return res;
 }
 
 //p(perticleの配列)の座標から全部の加速度を初期化
