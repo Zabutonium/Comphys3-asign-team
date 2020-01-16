@@ -11,7 +11,7 @@
 const long N           = 10000; //perticleの数
 const long MAX_TIME    = 100;   //tの最大値
 const long DEVIDE_TIME = 100;  //tを何分割するか =n
-const string FILE_NAME = "inputfile.dat";
+const string FILE_NAME = "plotdata.dat";
 
 const double dt = (double)MAX_TIME / DEVIDE_TIME;
 
