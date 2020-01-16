@@ -24,7 +24,7 @@ struct object {
 
 void inputFromFile(vector<object> &per);
 
-void outputToFile(vector<object> &per, time);
+void outputToFile(vector<object> &per, double time);
 
 double distance(object obj1, object obj2);
 
