@@ -56,9 +56,7 @@ void inputFromFile(vector<object> &per) {
     for (int i = 0; i < N; i++) {
         double x[2], v[2];
         ifs >> x[0] >> x[1] >> v[0] >> v[1];
-        per[i] = {{x[0], x[1]},
-                  {v[0], v[1]},
-                  {   0,    0}};
+        per[i] = {x[0], x[1],v[0],v[1],0 , 0};
     }
     ifs.close();
 }
@@ -84,7 +82,7 @@ double acceralate(object obj1, object obj2, int axis) {
 double acceralateSum(vector<object> p, int index, int axis) {
     double res = 0;
     for (int i = 0; i < N; i++){
-        if (i = index) continue;
+        if (i == index) continue;
         res += acceralate(p[index], p[i], axis);
     }
     return res;    
@@ -105,7 +103,7 @@ void initAcceralate(vector<object> &p) {
 //更新されたxからaを新たにせっと(a_i+1)
 //vを更新
 void leapfrog(vector<object> &p){
-    vector<vector<double>> vMiddle(N, vector<double>(2));
+    vector<vector<double> > vMiddle(N, vector<double>(2));
     double h = MAX_TIME/DEVIDE_TIME;
     initAcceralate(p);
     for (int i = 0; i < N; i++) {
