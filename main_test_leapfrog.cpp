@@ -12,16 +12,17 @@
 const long N           = 10000; //perticleの数
 const long MAX_TIME    = 100;   //tの最大値
 const long DEVIDE_TIME = 1000;  //tを何分割するか
-const string FILE_NAME_INPUT  = "inputfile.dat";
-const string FILE_NAME_OUTPUT = "outputfile.dat";
+const string FILE_NAME = "inputfile.dat";
 
 const double dt = (double)MAX_TIME / DEVIDE_TIME;
 
 struct object {
     double x[2];
     double v[2];
-    double a[2] = {0, 0};
+    double a[2];
 };
+
+void inputFromFile(vector<object> &per);
 
 double distance(object obj1, object obj2);
 
@@ -35,43 +36,40 @@ double acceralateSum(vector<object> p, int index, int axis);
 
 void initAcceralate(vector<object> p, int axis);
 
-void scanandthrow(int num, std::fstream yomikaki);
-
-void leapfrog(object obj1, object obj2, int axis);
+void leapfrog(vector<object> &p);
 
 int main() {
     vector<object> particle(N);
-    //入力部 いらないかも
-    std::ifstream inputfile(FILE_NAME_INPUT);
-    for (int i = 0; i < N; i++) {
-        inputfile >> particle[i].x[0] >> particle[i].x[1] >> particle[i].v[0] >> particle[i].v[1];
-    }
-    inputfile.close();
-
+    inputFromFile(particle);
     for (int i = 0; i < DEVIDE_TIME; i++) {
-        
-        //入力部分 あとでかく
-        initAcceralate(particle, 0);
-        initAcceralate(particle, 1);
-        
-        
+        std::ofstream output(FILE_NAME);
     }
-
-    //出力
-    std::ofstream outputfile(FILE_NAME_OUTPUT);
     double t = 0;
     for(int i = 0; i < N; i++){
     //書き込み
         outputfile << t << " " << particle[i].x[0] << " " << particle[i].x[1] << " " << particle[i].v[0] << " " << particle[i].v[1];
     
     //時間発展
-        leapfrog(particle, i, 0);
-        leapfrog(particle, i, 1);
+        leapfrog(particle);
         t += MAX_TIME/DEVIDE_TIME;
         outputfile.close();
     }
     
     
+}
+
+void inputFromFile(vector<object> &per) {
+    std::ifstream ifs(FILE_NAME);
+    string gomi;
+    ifs >> gomi; //ｔの読み捨て
+    for (int i = 0; i < N; i++) {
+        double x[2], v[2];
+        ifs >> x[0] >> x[1] >> v[0] >> v[1];
+        per[i] = {{x[0], x[1]},
+                  {v[0], v[1]},
+                  {   0,    0}};
+    }
+    ifs.close();
 }
 
 double distance(object obj1, object obj2) {
@@ -91,29 +89,35 @@ double acceralateSum(vector<object> p, int index, int axis) {
     return res;    
 }
 
-void initAcceralate(vector<object> p) {
+//p(perticleの配列)の座標から全部の加速度を初期化
+void initAcceralate(vector<object> &p) {
     for (int i = 0; i < N; i++) {
         p[i].a[0] = acceralateSum(p, i, 0);
         p[i].a[1] = acceralateSum(p, i, 1);
     }
-}    
-
-//あとで直す
-void scanandthrow(int num, std::fstream &yomikaki) {
-    string buf;
-    for (int i = 0; i < num; i++) {
-        std::getline(std::cin, buf);
-    }
 }
 
 //leapfrogによる時間発展
-void leapfrog(vector<object> p,int index, int axis){
-    vector<object> np;
+//pの位置から加速度をセット(initAcceralate)
+//vMidlle = v_1/2
+//vMiddle -> xの順で更新
+//更新されたxからaを新たにせっと(a_i+1)
+//vを更新
+void leapfrog(vector<object> &p){
+    vector<vector<double>> vMiddle(N, vector<double>(2));
     double h = MAX_TIME/DEVIDE_TIME;
-    double a = acceralateSum(p, index, axis);
-    double newa;
-
-    p.at(index).x[axis] += p.at(index).v[axis]*h + a*h*h*0.5;
-    newa = acceralateSum(p, index, axis);
-    p.at(index).v[axis] += (a + newa)*h*0.5;
+    initAcceralate(p);
+    for (int i = 0; i < N; i++) {
+        vMiddle[i][0] = p[i].v[0] + p[i].a[0]*h/2;
+        vMiddle[i][1] = p[i].v[1] + p[i].a[0]*h/2;
+    }
+    for (int i = 0; i < N; i++) {
+        p[i].x[0] = p[i].x[0] + vMiddle[i][0]*h;
+        p[i].x[1] = p[i].x[1] + vMiddle[i][1]*h;
+    }
+    initAcceralate(p);
+    for (int i = 0; i < N; i++) {
+        p[i].v[0] = vMiddle[i][0] + p[i].a[0]*h/2;
+        p[i].v[0] = vMiddle[i][1] + p[i].a[1]*h/2;
+    }
 }
