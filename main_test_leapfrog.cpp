@@ -43,21 +43,11 @@ void leapfrog(vector<object> &p);
 int main() {
     vector<object> particle(N);
     inputFromFile(particle);
-    for (int i = 0; i < DEVIDE_TIME; i++) {
-        std::ofstream output(FILE_NAME);
-    }
-    double t = 0;
-    for(int i = 0; i < N; i++){
-    //書き込み
-        outputfile << t << " " << particle[i].x[0] << " " << particle[i].x[1] << " " << particle[i].v[0] << " " << particle[i].v[1];
-    
-    //時間発展
+    for (int i = 1; i <= DEVIDE_TIME; i++) {
+        double t = i*dt;
+        outputToFile(particle, t);
         leapfrog(particle);
-        t += MAX_TIME/DEVIDE_TIME;
-        outputfile.close();
     }
-    
-    
 }
 
 void inputFromFile(vector<object> &per) {
@@ -130,6 +120,6 @@ void leapfrog(vector<object> &p){
     initAcceralate(p);
     for (int i = 0; i < N; i++) {
         p[i].v[0] = vMiddle[i][0] + p[i].a[0]*h/2;
-        p[i].v[0] = vMiddle[i][1] + p[i].a[1]*h/2;
+        p[i].v[1] = vMiddle[i][1] + p[i].a[1]*h/2;
     }
 }
