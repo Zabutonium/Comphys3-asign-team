@@ -21,6 +21,7 @@ int main() {
     x = y = 0;
     count = 0;
     std::ofstream output(FILE_NAME);
+    output << 0 << " ";
     for (int i = 0; i < lines; i++) {
         for (int j = 0; j < lines; j++) {
             output << x << " " << y << " ";
@@ -34,6 +35,7 @@ int main() {
         x = 0;
         y += dy;
     }
+    output << std::endl;
     output.close();
     return 0;
 }
