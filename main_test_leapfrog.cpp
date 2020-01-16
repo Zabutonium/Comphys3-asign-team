@@ -48,21 +48,30 @@ int main() {
     }
     inputfile.close();
 
-    std::ofstream outputfile(FILE_NAME_OUTPUT);
-    double t = 0;
     for (int i = 0; i < DEVIDE_TIME; i++) {
-        //書き込み
-        outputfile << t << " " << particle[i].x[0] << " " << particle[i].x[1] << " " << particle[i].v[0] << " " << particle[i].v[1];
+        
         //入力部分 あとでかく
         initAcceralate(particle, 0);
         initAcceralate(particle, 1);
-        //時間発展
+        
+        
+    }
+
+    //出力
+    std::ofstream outputfile(FILE_NAME_OUTPUT);
+    double t = 0;
+    for(int i = 0; i < N; i++){
+    //書き込み
+        outputfile << t << " " << particle[i].x[0] << " " << particle[i].x[1] << " " << particle[i].v[0] << " " << particle[i].v[1];
+    
+    //時間発展
         leapfrog(particle, i, 0);
         leapfrog(particle, i, 1);
         t += MAX_TIME/DEVIDE_TIME;
-        
-
+        outputfile.close();
     }
+    
+    
 }
 
 double distance(object obj1, object obj2) {
@@ -99,6 +108,7 @@ void scanandthrow(int num, std::fstream &yomikaki) {
 
 //leapfrogによる時間発展
 void leapfrog(vector<object> p,int index, int axis){
+    vector<object> np;
     double h = MAX_TIME/DEVIDE_TIME;
     double a = acceralateSum(p, index, axis);
     double newa;
