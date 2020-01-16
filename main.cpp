@@ -19,6 +19,11 @@ struct object {
     double x[2];
     double v[2];
     double a[2];
+
+    object(double x0, double x1, double v0, double v1) {
+        this->x[0] = x0; this->x[1] = x1;
+        this->v[0] = v0; this->v[1] = v1;
+    }
 };
 
 void inputFromFile(vector<object> &per);
@@ -50,17 +55,17 @@ int main() {
 }
 
 void inputFromFile(vector<object> &per) {
+    std::cout << "start input ..." << std::endl;
     std::ifstream ifs(FILE_NAME);
     string gomi;
     ifs >> gomi; //ｔの読み捨て
     for (int i = 0; i < N; i++) {
         double x[2], v[2];
         ifs >> x[0] >> x[1] >> v[0] >> v[1];
-        per[i] = {{x[0], x[1]},
-                  {v[0], v[1]},
-                  {   0,    0}};
+        per[i] = object(x[0], x[1], v[0], v[1]);
     }
     ifs.close();
+    std::cout << "success input ..." << std::endl;;
 }
 
 void outputToFile(vector<object> &per, double time) {
@@ -84,7 +89,7 @@ double acceralate(object obj1, object obj2, int axis) {
 double acceralateSum(vector<object> p, int index, int axis) {
     double res = 0;
     for (int i = 0; i < N; i++){
-        if (i = index) continue;
+        if (i == index) continue;
         res += acceralate(p[index], p[i], axis);
     }
     return res;    
