@@ -11,15 +11,14 @@
 const long N           = 10000; //perticleの数
 const long MAX_TIME    = 100;   //tの最大値
 const long DEVIDE_TIME = 1000;  //tを何分割するか
-const string FILE_NAME_INPUT  = "inputfile.dat";
-const string FILE_NAME_OUTPUT = "outputfile.dat";
+const string FILE_NAME = "inputfile.dat";
 
 const double dt          = (double)MAX_TIME / DEVIDE_TIME;
 
 struct object {
     double x[2];
     double v[2];
-    double a[2] = {0, 0};
+    double a[2];
 };
 
 double distance(object obj1, object obj2);
@@ -36,17 +35,16 @@ void initAcceralate(vector<object> p, int axis);
 
 void scanandthrow(int num, std::fstream yomikaki);
 
+void inputFromFile(vector<object> &per, std::fstream &yomikaki, int counter);
+
 int main() {
     vector<object> perticle(N);
-    //入力部 いらないかも
-    std::ifstream inputfile(FILE_NAME_INPUT);
-    for (int i = 0; i < N; i++) {
-        inputfile >> perticle[i].x[0] >> perticle[i].x[1] >> perticle[i].v[0] >> perticle[i].v[1];
-    }
-    inputfile.close();
-
+    std::fstream yomikaki;
+    yomikaki.open(FILE_NAME);
+    int fileLineCounter = 0;
     for (int i = 0; i < DEVIDE_TIME; i++) {
         //入力部分 あとでかく
+        inputFromFile(perticle, yomikaki, fileLineCounter);
         initAcceralate(perticle, 0);
 
 
@@ -79,9 +77,14 @@ void initAcceralate(vector<object> p) {
 }    
 
 //あとで直す
-void scanandthrow(int num, std::fstream &yomikaki) {
+void scanAndThrow(std::fstream &yomikaki, int counter) {
     string buf;
-    for (int i = 0; i < num; i++) {
-        std::getline(std::cin, buf);
+    for (int i = 0; i < counter; i++) {
+        std::getline(yomikaki, buf);
     }
+}
+
+void inputFromFile(vector<object> per, std::fstream &yomikaki, int counter) {
+    scanAndThrow(yomikaki, counter);
+    
 }
