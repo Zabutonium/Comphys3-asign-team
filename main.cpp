@@ -24,6 +24,8 @@ struct object {
         this->x[0] = x0; this->x[1] = x1;
         this->v[0] = v0; this->v[1] = v1;
     }
+
+    object(void) {}
 };
 
 void inputFromFile(vector<object> &per);
@@ -70,7 +72,8 @@ void inputFromFile(vector<object> &per) {
 
 void outputToFile(vector<object> &per, double time) {
     std::cout << "t = " << time << ", writing now ..." << std::endl;
-    std::ofstream ofs(FILE_NAME);
+    std::ofstream ofs;
+    ofs.open(FILE_NAME, std::ios::app);
     ofs << time << " ";
     for (int i = 0; i < N; i++) {
         ofs << per[i].x[0] << " " << per[i].x[1] << " "
