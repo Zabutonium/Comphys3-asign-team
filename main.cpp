@@ -55,7 +55,7 @@ int main() {
 }
 
 void inputFromFile(vector<object> &per) {
-    std::cout << "start input ..." << std::endl;
+    std::cout << "start reading ..." << std::endl;
     std::ifstream ifs(FILE_NAME);
     string gomi;
     ifs >> gomi; //ｔの読み捨て
@@ -65,10 +65,11 @@ void inputFromFile(vector<object> &per) {
         per[i] = object(x[0], x[1], v[0], v[1]);
     }
     ifs.close();
-    std::cout << "success input ..." << std::endl;;
+    std::cout << "success reading ..." << std::endl;;
 }
 
 void outputToFile(vector<object> &per, double time) {
+    std::cout << "t = " << time << ", writing now ..." << std::endl;
     std::ofstream ofs(FILE_NAME);
     ofs << time << " ";
     for (int i = 0; i < N; i++) {
@@ -76,6 +77,7 @@ void outputToFile(vector<object> &per, double time) {
             << per[i].v[0] << " " << per[i].v[0] << " ";
     }
     ofs << std::endl;
+    std::cout << "succes whriting..." << std::endl;
 }
 
 double distance(object obj1, object obj2) {
