@@ -11,7 +11,7 @@
 
 const long N           = 10000; //perticleの数
 const long MAX_TIME    = 100;   //tの最大値
-const long DEVIDE_TIME = 1000;  //tを何分割するか
+const long DEVIDE_TIME = 1000;  //tを何分割するか =n
 const string FILE_NAME = "inputfile.dat";
 
 const double dt = (double)MAX_TIME / DEVIDE_TIME;
@@ -24,6 +24,8 @@ struct object {
 
 void inputFromFile(vector<object> &per);
 
+void outputToFile(vector<object> &per, double time);
+
 double distance(object obj1, object obj2);
 
 //obj1がobj2からうける力
@@ -34,28 +36,18 @@ double acceralate(object obj1, object obj2, int axis);
 //axis = 0でx　１でｙ
 double acceralateSum(vector<object> p, int index, int axis);
 
-void initAcceralate(vector<object> p, int axis);
+void initAcceralate(vector<object> &p);
 
 void leapfrog(vector<object> &p);
 
 int main() {
     vector<object> particle(N);
     inputFromFile(particle);
-    for (int i = 0; i < DEVIDE_TIME; i++) {
-        std::ofstream output(FILE_NAME);
-    }
-    double t = 0;
-    for(int i = 0; i < N; i++){
-    //書き込み
-        outputfile << t << " " << particle[i].x[0] << " " << particle[i].x[1] << " " << particle[i].v[0] << " " << particle[i].v[1];
-    
-    //時間発展
+    for (int i = 1; i <= DEVIDE_TIME; i++) {
+        double t = i*dt;
+        outputToFile(particle, t);
         leapfrog(particle);
-        t += MAX_TIME/DEVIDE_TIME;
-        outputfile.close();
     }
-    
-    
 }
 
 void inputFromFile(vector<object> &per) {
@@ -70,6 +62,16 @@ void inputFromFile(vector<object> &per) {
                   {   0,    0}};
     }
     ifs.close();
+}
+
+void outputToFile(vector<object> &per, double time) {
+    std::ofstream ofs(FILE_NAME);
+    ofs << time << " ";
+    for (int i = 0; i < N; i++) {
+        ofs << p[i].x[0] << " " << p[i].x[1] << " "
+            << p[i].v[0] << " " << p[i].v[0] << " ";
+    }
+    ofs << std::endl;
 }
 
 double distance(object obj1, object obj2) {
@@ -118,6 +120,6 @@ void leapfrog(vector<object> &p){
     initAcceralate(p);
     for (int i = 0; i < N; i++) {
         p[i].v[0] = vMiddle[i][0] + p[i].a[0]*h/2;
-        p[i].v[0] = vMiddle[i][1] + p[i].a[1]*h/2;
+        p[i].v[1] = vMiddle[i][1] + p[i].a[1]*h/2;
     }
 }
