@@ -35,7 +35,6 @@ int main() {
         x = 0;
         y += dy;
     }
-    output << std::endl;
     output.close();
     return 0;
 }

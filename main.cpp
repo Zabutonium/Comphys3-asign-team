@@ -19,6 +19,13 @@ struct object {
     double x[2];
     double v[2];
     double a[2];
+
+    object(double x0, double x1, double v0, double v1) {
+        this->x[0] = x0; this->x[1] = x1;
+        this->v[0] = v0; this->v[1] = v1;
+    }
+
+    object(void) {}
 };
 
 void inputFromFile(vector<object> &per);
@@ -44,31 +51,36 @@ int main() {
     inputFromFile(particle);
     for (int i = 1; i <= DEVIDE_TIME; i++) {
         double t = i*dt;
-        outputToFile(particle, t);
         leapfrog(particle);
+        outputToFile(particle, t);
     }
 }
 
 void inputFromFile(vector<object> &per) {
+    std::cout << "start reading ..." << std::endl;
     std::ifstream ifs(FILE_NAME);
     string gomi;
     ifs >> gomi; //ｔの読み捨て
     for (int i = 0; i < N; i++) {
         double x[2], v[2];
         ifs >> x[0] >> x[1] >> v[0] >> v[1];
-        per[i] = {x[0], x[1],v[0],v[1],0 , 0};
+        per[i] = object(x[0], x[1], v[0], v[1]);
+
     }
     ifs.close();
+    std::cout << "success reading ..." << std::endl;;
 }
 
 void outputToFile(vector<object> &per, double time) {
-    std::ofstream ofs(FILE_NAME);
-    ofs << time << " ";
+    std::cout << "t = " << time << ", writing now ..." << std::endl;
+    std::ofstream ofs;
+    ofs.open(FILE_NAME, std::ios::app);
+    ofs << std::endl <<  time << " ";
     for (int i = 0; i < N; i++) {
         ofs << per[i].x[0] << " " << per[i].x[1] << " "
             << per[i].v[0] << " " << per[i].v[0] << " ";
     }
-    ofs << std::endl;
+    std::cout << "succes whriting..." << std::endl;
 }
 
 double distance(object obj1, object obj2) {
@@ -107,16 +119,16 @@ void leapfrog(vector<object> &p){
     double h = MAX_TIME/DEVIDE_TIME;
     initAcceralate(p);
     for (int i = 0; i < N; i++) {
-        vMiddle[i][0] = p[i].v[0] + p[i].a[0]*h/2;
-        vMiddle[i][1] = p[i].v[1] + p[i].a[0]*h/2;
+        vMiddle[i][0] = p[i].v[0] + p[i].a[0]*dt/2;
+        vMiddle[i][1] = p[i].v[1] + p[i].a[1]*dt/2;
     }
     for (int i = 0; i < N; i++) {
-        p[i].x[0] = p[i].x[0] + vMiddle[i][0]*h;
-        p[i].x[1] = p[i].x[1] + vMiddle[i][1]*h;
+        p[i].x[0] = p[i].x[0] + vMiddle[i][0]*dt;
+        p[i].x[1] = p[i].x[1] + vMiddle[i][1]*dt;
     }
     initAcceralate(p);
     for (int i = 0; i < N; i++) {
-        p[i].v[0] = vMiddle[i][0] + p[i].a[0]*h/2;
-        p[i].v[1] = vMiddle[i][1] + p[i].a[1]*h/2;
+        p[i].v[0] = vMiddle[i][0] + p[i].a[0]*dt/2;
+        p[i].v[1] = vMiddle[i][1] + p[i].a[1]*dt/2;
     }
 }
