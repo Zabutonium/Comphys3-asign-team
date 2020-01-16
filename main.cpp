@@ -51,8 +51,8 @@ int main() {
     inputFromFile(particle);
     for (int i = 1; i <= DEVIDE_TIME; i++) {
         double t = i*dt;
-        outputToFile(particle, t);
         leapfrog(particle);
+        outputToFile(particle, t);
     }
 }
 
@@ -74,12 +74,11 @@ void outputToFile(vector<object> &per, double time) {
     std::cout << "t = " << time << ", writing now ..." << std::endl;
     std::ofstream ofs;
     ofs.open(FILE_NAME, std::ios::app);
-    ofs << time << " ";
+    ofs << std::endl <<  time << " ";
     for (int i = 0; i < N; i++) {
         ofs << per[i].x[0] << " " << per[i].x[1] << " "
             << per[i].v[0] << " " << per[i].v[0] << " ";
     }
-    ofs << std::endl;
     std::cout << "succes whriting..." << std::endl;
 }
 
@@ -116,19 +115,18 @@ void initAcceralate(vector<object> &p) {
 //vを更新
 void leapfrog(vector<object> &p){
     vector<vector<double>> vMiddle(N, vector<double>(2));
-    double h = MAX_TIME/DEVIDE_TIME;
     initAcceralate(p);
     for (int i = 0; i < N; i++) {
-        vMiddle[i][0] = p[i].v[0] + p[i].a[0]*h/2;
-        vMiddle[i][1] = p[i].v[1] + p[i].a[0]*h/2;
+        vMiddle[i][0] = p[i].v[0] + p[i].a[0]*dt/2;
+        vMiddle[i][1] = p[i].v[1] + p[i].a[1]*dt/2;
     }
     for (int i = 0; i < N; i++) {
-        p[i].x[0] = p[i].x[0] + vMiddle[i][0]*h;
-        p[i].x[1] = p[i].x[1] + vMiddle[i][1]*h;
+        p[i].x[0] = p[i].x[0] + vMiddle[i][0]*dt;
+        p[i].x[1] = p[i].x[1] + vMiddle[i][1]*dt;
     }
     initAcceralate(p);
     for (int i = 0; i < N; i++) {
-        p[i].v[0] = vMiddle[i][0] + p[i].a[0]*h/2;
-        p[i].v[1] = vMiddle[i][1] + p[i].a[1]*h/2;
+        p[i].v[0] = vMiddle[i][0] + p[i].a[0]*dt/2;
+        p[i].v[1] = vMiddle[i][1] + p[i].a[1]*dt/2;
     }
 }
