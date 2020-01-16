@@ -36,9 +36,7 @@ double acceralateSum(vector<object> p, int index, int axis);
 
 void initAcceralate(vector<object> p, int axis);
 
-void scanandthrow(int num, std::fstream yomikaki);
-
-void leapfrog(object obj1, object obj2, int axis);
+void leapfrog(vector<object> &p);
 
 int main() {
     vector<object> particle(N);
