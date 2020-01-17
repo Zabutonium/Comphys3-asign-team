@@ -10,8 +10,8 @@
 
 const long N           = 10000; //perticleの数
 const long MAX_TIME    = 100;   //tの最大値
-const long DEVIDE_TIME = 1000;  //tを何分割するか =n
-const string FILE_NAME = "inputfile.dat";
+const long DEVIDE_TIME = 100;  //tを何分割するか =n
+const string FILE_NAME = "plotdata.dat";
 
 const double dt = (double)MAX_TIME / DEVIDE_TIME;
 
@@ -97,7 +97,7 @@ double acceralateSum(vector<object> p, int index, int axis) {
         if (i == index) continue;
         res += acceralate(p[index], p[i], axis);
     }
-    return res;    
+    return res;
 }
 
 //p(perticleの配列)の座標から全部の加速度を初期化
@@ -116,7 +116,6 @@ void initAcceralate(vector<object> &p) {
 //vを更新
 void leapfrog(vector<object> &p){
     vector<vector<double> > vMiddle(N, vector<double>(2));
-    double h = MAX_TIME/DEVIDE_TIME;
     initAcceralate(p);
     for (int i = 0; i < N; i++) {
         vMiddle[i][0] = p[i].v[0] + p[i].a[0]*dt/2;

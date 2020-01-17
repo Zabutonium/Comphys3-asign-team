@@ -6,17 +6,14 @@
 #include <cmath>
 
 const long        MAX_POINT          = 10000;
-const long        INITIAL_VELOCITY_X = 100;
-const long        INITIAL_VELOCITY_Y = 100;
-//const long        INITIAL_MASS       = 10000;
-const long        N                  = 100;
-const std::string FILE_NAME          = "inputfile.dat";
-
-long upSqrt(long num); //sqrtとったやつを切り上げ
+const long        INITIAL_VELOCITY_X = 0;
+const long        INITIAL_VELOCITY_Y = 0;
+const long        N                  = 10000;
+const std::string FILE_NAME          = "plotdata.dat";
 
 int main() {
     long lines, x, y, dx, dy, count;
-    lines = std::ceil(std::sqrt(N));
+    lines = std::ceil(std::sqrt((double)N));
     dx = dy = MAX_POINT/lines;
     x = y = 0;
     count = 0;
@@ -26,10 +23,8 @@ int main() {
         for (int j = 0; j < lines; j++) {
             output << x << " " << y << " ";
             output << INITIAL_VELOCITY_X << " " << INITIAL_VELOCITY_Y << " ";
-            //output << INITIAL_MASS;
             count++;
             if (count == N) break;
-            //output << " ";
             x += dx;
         }
         x = 0;
