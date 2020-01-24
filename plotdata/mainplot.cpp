@@ -73,10 +73,10 @@ void inputFromFile(vector<object> &per) {
     std::cout << "reading succeed." << std::endl;;
 }
 
-void outputToFile(vector<object> &per, double time) {
+void outputToFile(vector<object> &per, double time, int i) {
     std::cout << "t = " << time << ", writing now ..." << std::endl;
-    std::ostringstream name; name << time;
-    string dataname = "plot_t=" + name.str() + ".dat";
+    std::ostringstream name; name << i;
+    string dataname = "plot_i=" + name.str() + ".dat";
     std::ofstream datafile(dataname);
     //datafile.open();
     for (int i = 0; i < N; i++) {
