@@ -46,6 +46,8 @@ void initAcceralate(vector<object> &p);
 
 void leapfrog(vector<object> &p);
 
+void gnuplotplot(vector<object> p);
+
 int main() {
     vector<object> particle(N);
     inputFromFile(particle);
@@ -54,6 +56,7 @@ int main() {
         double t = i*dt;
         leapfrog(particle);
         outputToFile(particle, t);
+        gnuplotplot(particle);
     }
 }
 
@@ -131,4 +134,9 @@ void leapfrog(vector<object> &p){
         p[i].v[0] = vMiddle[i][0] + p[i].a[0]*dt/2;
         p[i].v[1] = vMiddle[i][1] + p[i].a[1]*dt/2;
     }
+}
+
+//gnuplotの読み出し，結果の書き出しを行う関数
+void gnuplotplot(vector<object> p){
+    
 }
