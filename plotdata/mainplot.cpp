@@ -9,8 +9,8 @@
 #define vector std::vector
 #define string std::string
 
-const long N           = 10; //particleの数
-const long MAX_TIME    = 10;   //tの最大値
+const long N           = 100; //particleの数
+const long MAX_TIME    = 40;   //tの最大値
 const long DEVIDE_TIME = 100;  //tを何分割するか =n
 const string FILE_NAME = "Initialplot_grid.dat";
 
@@ -47,6 +47,7 @@ void initAcceralate(vector<object> &p);
 
 void leapfrog(vector<object> &p);
 
+//////////////////////////////////////////////////////////////////////////////////////////
 int main() {
     vector<object> particle(N);
     inputFromFile(particle);
@@ -57,12 +58,13 @@ int main() {
         leapfrog(particle);
     }
 }
+//////////////////////////////////////////////////////////////////////////////////////////
 
 void inputFromFile(vector<object> &per) {
     std::cout << "start reading ..." << std::endl;
     std::ifstream ifs(FILE_NAME);
-    string gomi;
-    ifs >> gomi; //ｔの読み捨て
+    //string gomi;
+    //ifs >> gomi; //ｔの読み捨て
     for (int i = 0; i < N; i++) {
         double x[2], v[2];
         ifs >> x[0] >> x[1] >> v[0] >> v[1];
@@ -78,9 +80,11 @@ void outputToFile(vector<object> &per, double time, int i) {
     std::ostringstream name; name << i;
     string dataname = "plot_i=" + name.str() + ".dat";
     std::ofstream datafile(dataname);
+
     for (int i = 0; i < N; i++) {
-        datafile << per[i].x[0] << " " << per[i].x[1] << " " << std::endl;
+        datafile << per[i].x[0] << " " << per[i].x[1] << std::endl;
     }
+
     std::cout <<"t = " << time << ", Writing succeed." << std::endl;
 }
 
