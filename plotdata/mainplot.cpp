@@ -4,14 +4,15 @@
 #include <string>
 #include <fstream>
 #include <cmath>
+#include <sstream>
 
 #define vector std::vector
 #define string std::string
 
 const long N           = 10000; //particleの数
-const long MAX_TIME    = 20;   //tの最大値
+const long MAX_TIME    = 10;   //tの最大値
 const long DEVIDE_TIME = 100;  //tを何分割するか =n
-const string FILE_NAME = "plotdata.dat";
+const string FILE_NAME = "Initialplot_grid.dat";
 
 const double dt = (double)MAX_TIME / DEVIDE_TIME;
 
@@ -46,17 +47,14 @@ void initAcceralate(vector<object> &p);
 
 void leapfrog(vector<object> &p);
 
-void gnuplotplot(vector<object> p);
-
 int main() {
     vector<object> particle(N);
     inputFromFile(particle);
 
-    for (int i = 1; i <= DEVIDE_TIME; i++) {
+    for (int i = 0; i <= DEVIDE_TIME; i++) {
         double t = i*dt;
-        leapfrog(particle);
         outputToFile(particle, t);
-        gnuplotplot(particle);
+        leapfrog(particle);
     }
 }
 
@@ -72,19 +70,19 @@ void inputFromFile(vector<object> &per) {
 
     }
     ifs.close();
-    std::cout << "success reading ..." << std::endl;;
+    std::cout << "reading succeed." << std::endl;;
 }
 
 void outputToFile(vector<object> &per, double time) {
     std::cout << "t = " << time << ", writing now ..." << std::endl;
-    std::ofstream ofs;
-    ofs.open(FILE_NAME, std::ios::app);
-    ofs << std::endl <<  time << " ";
+    std::ostringstream name; name << time;
+    string dataname = "plot_t=" + name.str() + ".dat";
+    std::ofstream datafile(dataname);
+    //datafile.open();
     for (int i = 0; i < N; i++) {
-        ofs << per[i].x[0] << " " << per[i].x[1] << " "
-            << per[i].v[0] << " " << per[i].v[0] << " ";
+        datafile << per[i].x[0] << " " << per[i].x[1] << " " << std::endl;
     }
-    std::cout << "succes writing..." << std::endl;
+    std::cout <<"t = " << time << ", Writing succeed." << std::endl;
 }
 
 double distance(object obj1, object obj2) {
@@ -134,9 +132,4 @@ void leapfrog(vector<object> &p){
         p[i].v[0] = vMiddle[i][0] + p[i].a[0]*dt/2;
         p[i].v[1] = vMiddle[i][1] + p[i].a[1]*dt/2;
     }
-}
-
-//gnuplotの読み出し，結果の書き出しを行う関数
-void gnuplotplot(vector<object> p){
-    
 }
