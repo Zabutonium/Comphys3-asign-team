@@ -9,7 +9,7 @@
 #define string std::string
 
 const long N           = 10000; //particleの数
-const long MAX_TIME    = 20;   //tの最大値
+const long MAX_TIME    = 10;   //tの最大値
 const long DEVIDE_TIME = 100;  //tを何分割するか =n
 const string FILE_NAME = "plotdata.dat";
 
@@ -69,7 +69,7 @@ void inputFromFile(vector<object> &per) {
 
     }
     ifs.close();
-    std::cout << "success reading ..." << std::endl;;
+    std::cout << "reading succeed." << std::endl;;
 }
 
 void outputToFile(vector<object> &per, double time) {
@@ -81,7 +81,7 @@ void outputToFile(vector<object> &per, double time) {
         ofs << per[i].x[0] << " " << per[i].x[1] << " "
             << per[i].v[0] << " " << per[i].v[0] << " ";
     }
-    std::cout << "succes writing..." << std::endl;
+    std::cout << "Writing succeed." << std::endl;
 }
 
 double distance(object obj1, object obj2) {
