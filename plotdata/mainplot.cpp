@@ -9,7 +9,7 @@
 #define vector std::vector
 #define string std::string
 
-const long N           = 10000; //particleの数
+const long N           = 10; //particleの数
 const long MAX_TIME    = 10;   //tの最大値
 const long DEVIDE_TIME = 100;  //tを何分割するか =n
 const string FILE_NAME = "Initialplot_grid.dat";
@@ -31,7 +31,7 @@ struct object {
 
 void inputFromFile(vector<object> &per);
 
-void outputToFile(vector<object> &per, double time);
+void outputToFile(vector<object> &per, double time, int i);
 
 double distance(object obj1, object obj2);
 
@@ -53,7 +53,7 @@ int main() {
 
     for (int i = 0; i <= DEVIDE_TIME; i++) {
         double t = i*dt;
-        outputToFile(particle, t);
+        outputToFile(particle, t,i);
         leapfrog(particle);
     }
 }
@@ -78,7 +78,6 @@ void outputToFile(vector<object> &per, double time, int i) {
     std::ostringstream name; name << i;
     string dataname = "plot_i=" + name.str() + ".dat";
     std::ofstream datafile(dataname);
-    //datafile.open();
     for (int i = 0; i < N; i++) {
         datafile << per[i].x[0] << " " << per[i].x[1] << " " << std::endl;
     }

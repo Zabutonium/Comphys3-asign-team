@@ -1,18 +1,17 @@
 reset
-set terminal gif animate optimize delay 10 size 10000,10000
+set terminal gif animate optimize delay 10 size -10000,10000
 set output "plot.gif"
 set style line 1 ps 0.6 pt 7 lt 3
-set xrange [-10000:10000]
-set yrange [-10000:10000]
+set xrange [-10:10]
+set yrange [-10:10]
 
-N  = 10000 #particleの数
-MT = 20   #tの最大値
+N  = 10 #particleの数
+MT = 10   #tの最大値
 dev = 100  #tを何分割するか =n
-t = 0
 do for [i = 0:dev] {
-    img(i) = sprintf("plot_t=%f.dat",t)
+    t = i * MT / dev
+    img(i) = sprintf("plot_i=%d.dat",i)
     time = sprintf("t = %f",t)
     set title time
     plot img(i) using 1:2 ls 1
-    t = t + 0.1
 }

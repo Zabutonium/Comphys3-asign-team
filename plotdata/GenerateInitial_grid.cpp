@@ -5,10 +5,10 @@
 #include <fstream>
 #include <cmath>
 
-const long        MAX_POINT          = 10000;
+const long        MAX_POINT          = 100;
 const long        INITIAL_VELOCITY_X = 0;
 const long        INITIAL_VELOCITY_Y = 0;
-const long        N                  = 10000;
+const long        N                  = 10;
 const std::string FILE_NAME          = "Initialplot_grid.dat";
 
 int main() {
