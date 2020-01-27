@@ -16,7 +16,7 @@ int main() {
     long lines, count;
     double x, y, dx, dy;
     lines = std::ceil(std::sqrt((double)N));
-    dx = dy = 2*MAX_POINT/lines;
+    dx = dy = 2*(double)MAX_POINT/lines;
     x = y = -MAX_POINT;
     count = 0;
     std::ofstream output(FILE_NAME);
