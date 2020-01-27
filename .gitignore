@@ -1,2 +1,3 @@
 *.out
 plot_*.dat
+*_dede.sh
