@@ -53,6 +53,4 @@ void outputCircleRnd(std::ofstream &ofs, std::mt19937 &output) {
     double x = r*std::cos(theta);
     double y = r*std::sin(theta);
     ofs << x << " " << y << " ";
-
-    std::cout << "test" << x*x+y*y << std::endl;
 }
