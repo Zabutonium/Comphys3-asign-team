@@ -55,7 +55,7 @@ void leapfrog(vector<object> &p);
 int main() {
     vector<object> particle(N);
     inputFromFile(particle);
-
+    correctVelocity(particle);
     for (int i = 0; i <= DEVIDE_TIME; i++) {
         double t = i*dt;
         outputToFile(particle, t,i);
