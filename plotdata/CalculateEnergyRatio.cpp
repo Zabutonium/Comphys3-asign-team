@@ -44,6 +44,7 @@ int main() {
     return 0;
 }
 /////////////////////////////////////////////////////////////////////////
+
 void inputFromFile(vector<object> &per) {
     std::cout << "start reading ..." << std::endl;
     std::ifstream ifs(FILE_NAME);
