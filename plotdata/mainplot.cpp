@@ -31,7 +31,7 @@ struct object {
     object(void) {}
 };
 
-void raiseVelocity
+void correctVelocity(vector<object> &per);
 
 void inputFromFile(vector<object> &per);
 
