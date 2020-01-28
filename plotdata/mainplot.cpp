@@ -105,8 +105,7 @@ double acceralate(object obj1, object obj2, int axis) {
     return (obj2.x[axis] -obj1.x[axis]) / std::pow(distance(obj1, obj2) + SOFTING_FORCE, 3);
 }
 
-doubl力のe acceralateSum(v
-ector<object> p, int index, int axis) {
+double acceralateSum(vector<object> p, int index, int axis) {
     double res = 0;
     for (int i = 0; i < N; i++){
         if (i == index) continue;
