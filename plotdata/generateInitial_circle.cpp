@@ -1,4 +1,4 @@
-//座標半径MAX_POINTの円の中
+//座標半径radiusの円の中
 //速度x,yそれぞれ[-MAX_VEROCITY,MAX_VEROCITY]
 //一応出力の形式をゆーたんのgridにあわせました
 #include <iostream>

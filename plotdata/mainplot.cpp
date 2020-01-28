@@ -64,8 +64,6 @@ int main() {
 void inputFromFile(vector<object> &per) {
     std::cout << "start reading ..." << std::endl;
     std::ifstream ifs(FILE_NAME);
-    //string gomi;
-    //ifs >> gomi; //ｔの読み捨て
     for (int i = 0; i < N; i++) {
         double x[2], v[2];
         ifs >> x[0] >> x[1] >> v[0] >> v[1];
