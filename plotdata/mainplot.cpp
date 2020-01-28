@@ -9,9 +9,10 @@
 #define vector std::vector
 #define string std::string
 
-const long N           = 100; //particleの数
+const long N           = 100;  //particleの数
 const long MAX_TIME    = 40;   //tの最大値
 const long DEVIDE_TIME = 100;  //tを何分割するか =n
+const double SOFTING   = 0.01  //softing parameter
 const string FILE_NAME = "Initialplot_grid.dat";
 
 const double dt = (double)MAX_TIME / DEVIDE_TIME;
@@ -93,7 +94,7 @@ double distance(object obj1, object obj2) {
 }
 
 double acceralate(object obj1, object obj2, int axis) {
-    return (obj2.x[axis] -obj1.x[axis]) / std::pow(distance(obj1, obj2), 3);
+    return (obj2.x[axis] -obj1.x[axis]) / std::pow(distance(obj1, obj2) + SOFTING, 3);
 }
 
 double acceralateSum(vector<object> p, int index, int axis) {
