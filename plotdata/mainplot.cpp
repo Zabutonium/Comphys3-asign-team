@@ -12,7 +12,8 @@
 const long N           = 100;  //particleの数
 const long MAX_TIME    = 40;   //tの最大値
 const long DEVIDE_TIME = 100;  //tを何分割するか =n
-const double SOFTING   = 0.01;  //softing parameter
+const double SOFTING_FORCE    = 0.01;  //力のsofting parameter
+const double CORRECT_VELOCITY = 0;     //速度の補正値
 const string FILE_NAME = "Initialplot_grid.dat";
 
 const double dt = (double)MAX_TIME / DEVIDE_TIME;
@@ -29,6 +30,8 @@ struct object {
 
     object(void) {}
 };
+
+void correctVelocity(vector<object> &per);
 
 void inputFromFile(vector<object> &per);
 
@@ -52,7 +55,7 @@ void leapfrog(vector<object> &p);
 int main() {
     vector<object> particle(N);
     inputFromFile(particle);
-
+    correctVelocity(particle);
     for (int i = 0; i <= DEVIDE_TIME; i++) {
         double t = i*dt;
         outputToFile(particle, t,i);
@@ -64,8 +67,6 @@ int main() {
 void inputFromFile(vector<object> &per) {
     std::cout << "start reading ..." << std::endl;
     std::ifstream ifs(FILE_NAME);
-    //string gomi;
-    //ifs >> gomi; //ｔの読み捨て
     for (int i = 0; i < N; i++) {
         double x[2], v[2];
         ifs >> x[0] >> x[1] >> v[0] >> v[1];
@@ -89,12 +90,19 @@ void outputToFile(vector<object> &per, double time, int i) {
     std::cout <<"t = " << time << ", Writing succeed." << std::endl;
 }
 
+void correctVelocity(vector<object> &per){
+    for (int i = 0; i < N; i++) {
+        per[i].v[0] += CORRECT_VELOCITY;
+        per[i].v[1] += CORRECT_VELOCITY;
+    }
+}
+
 double distance(object obj1, object obj2) {
     return std::sqrt(pow(obj1.x[0] - obj2.x[0] , 2) + pow(obj1.x[1] - obj2.x[1] , 2));
 }
 
 double acceralate(object obj1, object obj2, int axis) {
-    return (obj2.x[axis] -obj1.x[axis]) / std::pow(distance(obj1, obj2) + SOFTING, 3);
+    return (obj2.x[axis] -obj1.x[axis]) / std::pow(distance(obj1, obj2) + SOFTING_FORCE, 3);
 }
 
 double acceralateSum(vector<object> p, int index, int axis) {
