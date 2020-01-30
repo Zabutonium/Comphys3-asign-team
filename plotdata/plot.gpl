@@ -1,20 +1,21 @@
 reset
-set terminal gif animate optimize
+set terminal gif animate optimize delay 10
 set size square
 set output "plot.gif"
-RANGE = 15
+RANGE = 10.0
 set xrange [-RANGE:RANGE]
 set yrange [-RANGE:RANGE]
 set grid
 
-MT = 0.003   #tの最大値
-dev = 100.0  #tを何分割するか =n
+N = 1000 #質点の数
+MT = 5   #tの最大値
+dev = 1000.0  #tを何分割するか =n
 do for [i = 0.0:dev] {
     t = i * MT / dev
     img(i) = sprintf("plot_i=%d.dat",i)
-    time = sprintf("t = %f",t)
+    time = sprintf("N = %d,t = %f",N,t)
     set title time
     set xlabel "x"
     set ylabel "y"
-    plot img(i) using 1:2 ps 0.6 pt 7 title "質点たち"
+    plot img(i) using 1:2 ps 0.6 pt 7
 }
