@@ -1,19 +1,19 @@
 reset
-set terminal gif animate optimize delay 10
+set terminal gif animate optimize delay 15
 set size square
 set output "plot.gif"
-set xrange [0:300]
-set yrange [0:300]
+set xrange [-10:10]
+set yrange [-10:10]
 set grid
 
-MT = 40   #tの最大値
-dev = 100  #tを何分割するか =n
-do for [i = 0:dev] {
+MT = 0.5   #tの最大値
+dev = 100.0  #tを何分割するか =n
+do for [i = 0.0:dev] {
     t = i * MT / dev
     img(i) = sprintf("plot_i=%d.dat",i)
     time = sprintf("t = %f",t)
     set title time
     set xlabel "x"
     set ylabel "y"
-    plot img(i) using 1:2 ps 0.6 pt 7
+    plot img(i) using 1:2 ps 0.6 pt 7 title "質点たち"
 }

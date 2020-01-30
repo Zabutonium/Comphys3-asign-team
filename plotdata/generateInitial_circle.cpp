@@ -12,9 +12,10 @@
 const long        MAX_RADIUS    = 1;
 const double      MAX_THETA     = 2*PI;
 const long        MAX_VELOCITY  = 1;
-const long        N             = 100;
+const long        N             = 5000;
 const long        DECIMAL_DEGIT = 6;
 const std::string FILE_NAME     = "Initialplot_circle.dat";
+const std::string FILE_NAME0     = "Initialplot_circlev=0.dat";
 
 int sign(int input); //乱数の入力を1or-1で返すだけ
 
@@ -27,11 +28,17 @@ int main() {
     std::mt19937 rnd_p(seed());
     std::mt19937 rnd_v(seed());
     std::ofstream ofs(FILE_NAME);
+    std::ofstream ofs0(FILE_NAME0);
     for (int i = 0; i < N; i++) {
         outputCircleRnd(ofs, rnd_p);
         ofs << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) << " ";
         ofs << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) << " ";
         ofs << std::endl;
+
+        ofs0 << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) << " ";
+        ofs0 << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) << " ";
+        ofs0 << 0 << " " << 0 << " ";
+        ofs0 << std::endl;
     }
     return 0;
 }

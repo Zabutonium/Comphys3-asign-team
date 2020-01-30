@@ -9,12 +9,12 @@
 #define vector std::vector
 #define string std::string
 
-const long N           = 100;  //particleの数
-const long MAX_TIME    = 40;   //tの最大値
+const long N           = 5000;  //particleの数
+const double MAX_TIME    = 0.5;   //tの最大値
 const long DEVIDE_TIME = 100;  //tを何分割するか =n
 const double SOFTING_FORCE    = 0.01;  //力のsofting parameter
-const double CORRECT_VELOCITY = 0;     //速度の補正値
-const string FILE_NAME = "Initialplot_grid.dat";
+const double CORRECT_VELOCITY = 1;     //速度の補正値
+const string FILE_NAME = "Initialplot_circle.dat";
 
 const double dt = (double)MAX_TIME / DEVIDE_TIME;
 
@@ -92,8 +92,8 @@ void outputToFile(vector<object> &per, double time, int i) {
 
 void correctVelocity(vector<object> &per){
     for (int i = 0; i < N; i++) {
-        per[i].v[0] += CORRECT_VELOCITY;
-        per[i].v[1] += CORRECT_VELOCITY;
+        per[i].v[0] *= CORRECT_VELOCITY;
+        per[i].v[1] *= CORRECT_VELOCITY;
     }
 }
 
