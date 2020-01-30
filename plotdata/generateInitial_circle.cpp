@@ -9,7 +9,7 @@
 
 #define PI 3.14159265359
 
-const long        MAX_RADIUS    = 1;
+const long        MAX_RADIUS    = 10;
 const double      MAX_THETA     = 2*PI;
 const long        MAX_VELOCITY  = 1;
 const long        N             = 5000;
