@@ -1,14 +1,14 @@
 reset
-set terminal gif animate optimize delay 5
+set terminal gif animate optimize delay 1
 set size square
 set output "plot.gif"
-RANGE = 40.0
+RANGE = 50.0
 set xrange [-RANGE:RANGE]
 set yrange [-RANGE:RANGE]
 set grid
 
-N = 5000 #質点の数
-MT = 5.0   #tの最大値
+N = 10000 #質点の数
+MT = 10.0   #tの最大値
 dev = 500.0  #tを何分割するか =n
 do for [i = 0.0:dev] {
     t = i * MT / dev

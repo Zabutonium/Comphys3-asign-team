@@ -9,12 +9,12 @@
 #define vector std::vector
 #define string std::string
 
-const long N           = 5000;  //particleの数
-const double MAX_TIME    = 5.0;   //tの最大値
+const long N           = 10000;  //particleの数
+const double MAX_TIME    = 10.0;   //tの最大値
 const long DEVIDE_TIME = 500;  //tを何分割するか =n
 const double SOFTING_FORCE    = 0.01;  //力のsofting parameter
-const double CORRECT_VELOCITY = 0.4;     //速度の補正値
-const double MOVE_x             = 0.0;    //初期条件の座標をずらす
+const double CORRECT_VELOCITY = 1;     //速度の補正値
+const double MOVE_x             = 1.0;    //初期条件の座標をずらす
 const double MOVE_y             = 0.0;
 const double MOVE_Vx             = 0.0;    //初期条件の速度をずらす
 const double MOVE_Vy             = 0.0;

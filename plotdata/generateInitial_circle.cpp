@@ -9,11 +9,12 @@
 
 #define PI 3.14159265359
 
-const long        MAX_RADIUS    = 10;
+const long        MAX_RADIUS    = 1;
 const double      MAX_THETA     = 2*PI;
 const long        MAX_VELOCITY  = 1;
-const long        N             = 5000;
+const long        N             = 10000;
 const long        DECIMAL_DEGIT = 6;
+const double      LEXUS         = 1;//速度の補正
 const std::string FILE_NAME     = "Initialplot_circle.dat";
 const std::string FILE_NAME0     = "Initialplot_circlev=0.dat";
 
@@ -31,14 +32,14 @@ int main() {
     std::ofstream ofs0(FILE_NAME0);
     for (int i = 0; i < N; i++) {
         outputCircleRnd(ofs, rnd_p);
-        ofs << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) << " ";
-        ofs << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) << " ";
+        ofs << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) * LEXUS << " ";
+        ofs << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) * LEXUS << " ";
         ofs << std::endl;
 
-        ofs0 << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) << " ";
-        ofs0 << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) << " ";
-        ofs0 << 0 << " " << 0 << " ";
-        ofs0 << std::endl;
+        //ofs0 << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) << " ";
+        //ofs0 << sign(rnd_p())*get0toMaxRnd(rnd_v, MAX_VELOCITY) << " ";
+        //ofs0 << 0 << " " << 0 << " ";
+        //ofs0 << std::endl;
     }
     return 0;
 }
